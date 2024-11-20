@@ -30,4 +30,4 @@ class Color {
         void cap();
 };
 
-#endif
+#endif // COLOR_HPP
