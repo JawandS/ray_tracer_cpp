@@ -18,12 +18,21 @@ Color::Color(double r, double g, double b) {
 Color Color::operator+(Color &c) {
     return Color(this->r + c.r, this->g + c.g, this->b + c.b);
 }
+Color Color::add(Color &c) {
+    return Color::operator+(c);
+}
 Color Color::operator+(double scalar) {
     return Color(this->r + scalar, this->g + scalar, this->b + scalar);
+}
+Color Color::add(double scalar) {
+    return Color::operator+(scalar);
 }
 // implement operator* method
 Color Color::operator*(double scalar) {
     return Color(this->r * scalar, this->g * scalar, this->b * scalar);
+}
+Color Color::mult_scalar(double scalar) {
+    return Color::operator*(scalar);
 }
 
 // implement cap

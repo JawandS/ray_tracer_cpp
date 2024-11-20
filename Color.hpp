@@ -19,9 +19,12 @@ class Color {
 
         // add/operator+ method
         Color operator+(Color &c);
+        Color add(Color &c);
         Color operator+(double scalar);
+        Color add(double scalar);
         // mult_scalar/operator* method
         Color operator*(double scalar);
+        Color mult_scalar(double scalar);
 
         // cap method
         void cap();
