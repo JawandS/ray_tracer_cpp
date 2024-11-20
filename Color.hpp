@@ -9,8 +9,8 @@ class Color {
 
     public:
         // constructors
-        Color() {}
-        Color(double r, double g, double b) {}
+        Color();
+        Color(double r, double g, double b);
 
         // getters 
         inline double get_r() { return r; }
@@ -18,13 +18,13 @@ class Color {
         inline double get_b() { return b; }
 
         // add/operator+ method
-        Color operator+(Color &c) {}
-        Color operator+(double scalar) {}
+        Color operator+(Color &c);
+        Color operator+(double scalar);
         // mult_scalar/operator* method
-        Color operator*(double scalar) {}
+        Color operator*(double scalar);
 
         // cap method
-        void cap() {}
+        void cap();
 };
 
 #endif
