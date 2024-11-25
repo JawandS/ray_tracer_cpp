@@ -8,7 +8,7 @@ class Object {
         Color color;
         bool checker;
         Color color2;
-        virtual bool intersect(RAY_T ray, Object *obj, double *t, Vec *intersection_point, Vec *normal) {
+        virtual bool intersect(RAY_T ray, double *t, Vec *intersection_point, Vec *normal) {
             return false;
         }
         Object *next;

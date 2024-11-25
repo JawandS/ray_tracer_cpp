@@ -5,7 +5,9 @@ using namespace std;
 
 class Color {
     private:
-        double r, g, b;
+        double r;
+        double g;
+        double b;
 
     public:
         // constructors
@@ -13,9 +15,15 @@ class Color {
         Color(double r, double g, double b);
 
         // getters 
-        inline double get_r() { return this->r; }
-        inline double get_g() { return this->g; }
-        inline double get_b() { return this->b; }
+        inline double get_r() { 
+            return this->r; 
+        }
+        inline double get_g() { 
+            return this->g; 
+        }
+        inline double get_b() { 
+            return this->b; 
+        }
 
         // add/operator+ method
         Color operator+(Color &c);

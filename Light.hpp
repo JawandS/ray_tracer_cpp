@@ -8,13 +8,13 @@
 #include "rt.hpp"
 
 class Light {
-    public:
-        Light(Vec loc);
-        Color illuminate(Object *obj, Vec intersection_point, Vec normal, scene *scene, rt ray);
-
     private:
         Vec loc;
-        static bool shadow_test(Vec intersection_point, Object *curr_obj, scene *scene);
+        static bool Light::shadow_test(Vec intersection_point, Object *curr_obj, SCENE_T *scene);
+
+    public:
+        Light(Vec loc);
+        Color Light::illuminate(Object *obj, Vec intersection_point, Vec normal, SCENE_T *scene, RAY_T ray);
 };
 
 #endif // LIGHT_HPP
