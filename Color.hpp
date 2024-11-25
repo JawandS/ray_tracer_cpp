@@ -13,9 +13,9 @@ class Color {
         Color(double r, double g, double b);
 
         // getters 
-        inline double get_r() { return r; }
-        inline double get_g() { return g; }
-        inline double get_b() { return b; }
+        inline double get_r() { return this->r; }
+        inline double get_g() { return this->g; }
+        inline double get_b() { return this->b; }
 
         // add/operator+ method
         Color operator+(Color &c);
