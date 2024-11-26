@@ -3,7 +3,7 @@
 
 using namespace std;
 
-// ray
+// ray structure 
 typedef struct {
     Vec origin;
     Vec dir;

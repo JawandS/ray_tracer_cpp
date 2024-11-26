@@ -45,14 +45,14 @@ class Vec {
         }
 
         // operator overloading
-        Vec Vec::add(Vec *b);
-        Vec operator+(Vec *b);
+        Vec Vec::add(const Vec &b);
+        Vec operator+(const Vec &b);
 
-        Vec Vec::sub(Vec *b);
-        Vec operator-(Vec *b);
+        Vec Vec::sub(const Vec &b);
+        Vec operator-(const Vec &b);
 
-        Vec Vec::mult(Vec *s);
-        Vec operator*(Vec *s);
+        Vec Vec::mult(const Vec &s);
+        Vec operator*(const Vec &s);
 
         Vec Vec::scalar_mult(double s);
         Vec operator*(double s);
@@ -64,7 +64,7 @@ class Vec {
             return this->x + this->y + this->z;
         }
 
-        double Vec::sum_floor_componenets();
+        int Vec::sum_floor_componenets();
 
 };
 

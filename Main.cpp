@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include "Vec.hpp"
+#include "Sphere.hpp"
+#include "Plane.hpp"
 #include "scene.hpp"
 #include "Object.hpp"
 #include "Color.hpp"
@@ -16,39 +19,37 @@ static void init(SCENE_T *scene) {
     char info_type; // what the information is 
     while (fscanf(file, "%c", &info_type) != EOF) { // iterate while file is not empty 
         if (info_type == 's') { // sphere type
-            // allocate space for object
-            node = (Object*) malloc(sizeof(Object));
-            node->type = 's'; // set type to sphere
+            // create variables
+            double x, y, z, r; // center and radius
+            double r_color, g_color, b_color; // color
             // read sphere center
-            fscanf(file, "%lf %lf %lf", &node->sphere.center.x, &node->sphere.center.y, &node->sphere.center.z);
+            fscanf(file, "%lf %lf %lf", x, y, z);
             // read sphere radius
-            fscanf(file, "%lf", &node->sphere.radius);
+            fscanf(file, "%lf", r);
             // read sphere color
-            fscanf(file, "%lf %lf %lf", &node->color.r, &node->color.g, &node->color.b);
-            // set checker to false
-            node->checker = 0;
-            // set interects function
-            node->intersects = intersects_sphere;
+            fscanf(file, "%lf %lf %lf", r_color, g_color, b_color);
+            // create sphere
+            node = new Sphere(Vec(x, y, z), r, Color(r_color, g_color, b_color));
             // add it to the objects linked list
             node->next = scene->objs;
             scene->objs = node;
         } else if (info_type == 'p') { // plane type
-            // allocate space for object
-            node = (OBJ_T*) malloc(sizeof(OBJ_T));
-            node->type = 'p'; // set type to plane
+            // create variables
+            double x, y, z; // normal
+            double D; // distance
+            double r_color, g_color, b_color; // color
+            double r_color2, g_color2, b_color2; // color2
             // read plane normal
-            fscanf(file, "%lf %lf %lf", &node->plane.normal.x, &node->plane.normal.y, &node->plane.normal.z);
+            fscanf(file, "%lf %lf %lf", x, y, z);
             // read plane distance 
-            fscanf(file, "%lf", &node->plane.D);
+            fscanf(file, "%lf", D);
             // read plane color 
-            fscanf(file, "%lf %lf %lf", &node->color.r, &node->color.g, &node->color.b);
-            // set checker to true
-            node->checker = 1;
+            fscanf(file, "%lf %lf %lf", r_color, g_color, b_color);
             // read plane color2
-            fscanf(file, "%lf %lf %lf", &node->color2.r, &node->color2.g, &node->color2.b);
-            // set interects function
-            node->intersects = intersects_plane;
-            // add it to the objects linked list
+            fscanf(file, "%lf %lf %lf", r_color2, g_color2, b_color2);
+            // create plane
+            node = new Plane(Vec(x, y, z), D, Color(r_color, g_color, b_color), true, Color(r_color2, g_color2, b_color2));
+            // add to list 
             node->next = scene->objs;
             scene->objs = node;
         } else if (info_type == 'l') { // light type
@@ -70,14 +71,11 @@ static Color trace(RAY_T ray, SCENE_T *scene) {
     Vec normal;
     Object *closest_obj = nullptr;
     // baseline color
-    Color obj_color;
-    obj_color.r = 0.3;
-    obj_color.g = 0.3;
-    obj_color.b = 0.5;
+    Color *obj_color = new Color(0.3, 0.3, 0.3);
     // iterate through objects in scene
     Object *curr;
     for(curr = scene->objs; curr != NULL; curr = curr->next) {
-        if (curr->intersects(ray, curr, &t, &intersection_point, &normal)) {
+        if (curr->intersect(ray, &t, &intersection_point, &normal)) {
             if (t < closest_t) {
                 closest_t = t;
                 closest_intersection_point = intersection_point;
@@ -88,17 +86,14 @@ static Color trace(RAY_T ray, SCENE_T *scene) {
     }
     // get object color
     if (closest_t < 1000 && closest_obj != NULL)
-        obj_color = illuminate(closest_obj, closest_intersection_point, closest_normal, scene, ray);    
-    return obj_color; 
+        obj_color = scene->light.illuminate(closest_obj, closest_intersection_point, closest_normal, scene, ray);    
+    return *obj_color; 
 }
 
 // main method
 int main() {
     // set eye position 
-    Vec eye_pos;
-    eye_pos.x = 0.0;
-    eye_pos.y = 0.0;
-    eye_pos.z = 0.0;
+    Vec eye_pos = Vec(0, 0, 0);
 
     // initialize scene
     SCENE_T scene;
@@ -123,13 +118,14 @@ int main() {
             // set ray origin and direction
             RAY_T curr_ray;
             curr_ray.origin = eye_pos;
-            curr_ray.dir.x = (scene.start_x + (x * scene.pixel_size));
-            curr_ray.dir.y = -(-scene.start_y + (y * scene.pixel_size));
-            curr_ray.dir.z = 1;
-            normalize(&curr_ray.dir);
+            double x_val = (scene.start_x + (x * scene.pixel_size));
+            double y_val = -(-scene.start_y + (y * scene.pixel_size));
+            double z_val = 1;
+            curr_ray.dir = Vec(x_val, y_val, z_val);
+            curr_ray.dir.normalize();
             // write pixel 
             Color point_color = trace(curr_ray, &scene); // replace with scene
-            fprintf(fimg, "%c%c%c", (unsigned char) (255 * point_color.r), (unsigned char) (255 * point_color.g), (unsigned char) (255 * point_color.b));
+            fprintf(fimg, "%c%c%c", (unsigned char) (255 * point_color.get_r()), (unsigned char) (255 * point_color.get_g()), (unsigned char) (255 * point_color.get_b()));
         }
     }
     printf("\n");
