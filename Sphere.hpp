@@ -12,16 +12,13 @@ class Sphere : public Object {
     private:
         Vec center;
         double radius;
+        Color color;
+        bool checker;
+        Color color2;
 
     public:
-        Sphere::Sphere(Vec center, double radius, Color color) {
-            this->center = center;
-            this->radius = radius;
-            this->color = color;
-            this->checker = false;
-            this->color2 = Color(0.0, 0.0, 0.0);
-        }
-        bool Sphere::intersect(RAY_T ray, double *t, Vec *intersection_point, Vec *normal);
+        Sphere(Vec center, double radius, Color color, bool checker = false, Color color2 = Color(0.0, 0.0, 0.0));
+        bool intersect(RAY_T ray, double *t, Vec *int_pt, Vec *normal);
 };
 
 

@@ -21,7 +21,7 @@ bool Light::shadow_test(SCENE_T scene, int obj_index, Vec int_pt) {
     // Create the shadow ray 
     RAY_T shadow_ray;
     shadow_ray.origin = int_pt;
-    shadow_ray.dir = scene.light.loc - int_pt;
+    shadow_ray.dir = this->loc - int_pt;
     shadow_ray.dir.normalize();
 
     // Check for intersection with any object
@@ -61,12 +61,12 @@ Color Light::illuminate(RAY_T ray, SCENE_T scene, int obj_index, Vec int_pt, Vec
     // check for shadow
     if (!shadow_test(scene, obj_index, int_pt)) {
         // get the attentuation - TODO FIX THIS 
-        double dl = (scene.light.loc - int_pt).length();
+        double dl = (this->loc - int_pt).len();
         double atten_b = (0.002 * dl) * (0.002 * dl) + 0.02 * dl + 0.2;
         double atten = 1 / atten_b;
 
         // diffuse light
-        Vec light_vector = scene.light.loc - int_pt;
+        Vec light_vector = this->loc - int_pt;
         light_vector.normalize();
 
         double dp = light_vector.dot(normal);

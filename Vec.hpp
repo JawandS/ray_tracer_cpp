@@ -11,12 +11,12 @@ class Vec {
     
     public:
         // constructors
-        Vec::Vec() {
+        Vec() {
             this->x = 0;
             this->y = 0;
             this->z = 0;
         }
-        Vec::Vec(double x, double y, double z) {
+        Vec(double x, double y, double z) {
             this->x = x;
             this->y = y;
             this->z = z;
@@ -45,26 +45,26 @@ class Vec {
         }
 
         // operator overloading
-        Vec Vec::add(const Vec &b);
+        Vec add(const Vec &b);
         Vec operator+(const Vec &b);
 
-        Vec Vec::sub(const Vec &b);
+        Vec sub(const Vec &b);
         Vec operator-(const Vec &b);
 
-        Vec Vec::mult(const Vec &s);
+        Vec mult(const Vec &s);
         Vec operator*(const Vec &s);
 
-        Vec Vec::scalar_mult(double s);
+        Vec scalar_mult(double s);
         Vec operator*(double s);
 
-        Vec Vec::scalar_divide(double s);
+        Vec scalar_divide(double s);
         Vec operator/(double s);
 
-        double Vec::sum_components() {
+        double sum_components() {
             return this->x + this->y + this->z;
         }
 
-        int Vec::sum_floor_componenets();
+        int sum_floor_componenets();
 
 };
 

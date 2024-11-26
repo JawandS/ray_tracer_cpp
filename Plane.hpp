@@ -14,14 +14,14 @@ class Plane : public Object {
         double D;
 
     public:
-        Plane::Plane(Vec normal, double D, Color color, bool checker, Color color2 = Color(0.0, 0.0, 0.0)) {
+        Plane(Vec normal, double D, Color color, bool checker, Color color2 = Color(0.0, 0.0, 0.0)) {
             this->normal = normal;
             this->D = D;
             this->color = color;
             this->checker = checker;
             this->color2 = color2;
         }
-        bool Plane::intersect(RAY_T ray, double *t, Vec *intersection_point, Vec *normal);
+        bool intersect(RAY_T ray, double *t, Vec *int_pt, Vec *normal);
 };
 
 
