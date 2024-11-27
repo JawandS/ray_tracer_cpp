@@ -12,9 +12,6 @@ class Sphere : public Object {
     private:
         Vec center;
         double radius;
-        Color color;
-        bool checker;
-        Color color2;
 
     public:
         Sphere(Vec center, double radius, Color color, bool checker = false, Color color2 = Color(0.0, 0.0, 0.0));
