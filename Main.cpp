@@ -78,7 +78,7 @@ static Color trace(RAY_T ray, SCENE_T scene, Light light) {
     Vec normal;
     Object *closest_obj = nullptr;
     // baseline color
-    Color *obj_color = new Color(0.3, 0.3, 0.3);
+    Color *obj_color = new Color(BACKGROUND_COLOR, BACKGROUND_COLOR, BACKGROUND_COLOR);
     // iterate through objects in scene
     Object *curr;
     int obj_index = 0;
@@ -104,15 +104,12 @@ static Color trace(RAY_T ray, SCENE_T scene, Light light) {
 // main method
 int main() {
     // set eye position 
-    Vec eye_pos = Vec(0, 0, 0);
+    Vec eye_pos = Vec(EYE_POS, EYE_POS, EYE_POS);
 
     // initialize scene
     SCENE_T *scene = new SCENE_T;
     Light *light = nullptr;
     init(scene, light);
-    // manual initialization: 640 x 480
-    const int X_LEN = 640;
-    const int Y_LEN = 480;
     scene->start_x = - ((double) X_LEN / (double) Y_LEN) / 2.0;
     scene->start_y = 0.5;
     scene->pixel_size = 1.0 / (double) Y_LEN;

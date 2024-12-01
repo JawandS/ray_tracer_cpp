@@ -3,6 +3,12 @@
 
 using namespace std;
 
+// define constants
+#define BACKGROUND_COLOR 0.3
+#define EYE_POS 0.0
+#define X_LEN 640
+#define Y_LEN 480
+
 // ray structure 
 typedef struct {
     Vec origin;
