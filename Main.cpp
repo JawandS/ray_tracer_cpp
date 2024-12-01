@@ -13,7 +13,7 @@
 using namespace std;
 
 // initialize method
-static void init(SCENE_T *scene, Light *light) {
+static void init(SCENE_T *scene, Light *&light) {
     // default values for scene 
     scene->objs = nullptr;
     // read file for object information
@@ -31,15 +31,9 @@ static void init(SCENE_T *scene, Light *light) {
             fscanf(file, "%lf", &r);
             // read sphere color
             fscanf(file, "%lf %lf %lf", &r_color, &g_color, &b_color);
-            // print input vals
-            printf("x: %lf, y: %lf, z: %lf, r: %lf, r_color: %lf, g_color: %lf, b_color: %lf\n", x, y, z, r, r_color, g_color, b_color);
             // create sphere
             Color *temp_color = new Color(r_color, g_color, b_color);
             node = new Sphere(Vec(x, y, z), r, *temp_color);
-            // print sphere color
-            printf("sphere color A: %lf, %lf, %lf\n", node->color.get_r(), node->color.get_g(), node->color.get_b());
-            printf("sphere color: %lf, %lf, %lf\n", temp_color->get_r(), temp_color->get_g(), temp_color->get_b());
-            // add it to the objects linked list
             node->next = scene->objs;
             scene->objs = node;
         } else if (info_type == 'p') { // plane type
@@ -114,7 +108,7 @@ int main() {
 
     // initialize scene
     SCENE_T *scene = new SCENE_T;
-    Light *light = new Light(Vec(0, 0, 0));
+    Light *light = nullptr;
     init(scene, light);
     // manual initialization: 640 x 480
     const int X_LEN = 640;
