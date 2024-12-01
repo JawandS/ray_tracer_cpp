@@ -56,7 +56,7 @@ Color Light::illuminate(RAY_T ray, SCENE_T scene, int obj_index, Vec int_pt, Vec
     Color color = Color(obj_color.get_r(), obj_color.get_g(), obj_color.get_b());
 
     // ambient light
-    color = color * 0.1;
+    color = obj_color * 0.1;
 
     // check for shadow
     if (!shadow_test(scene, obj_index, int_pt)) {
@@ -71,14 +71,16 @@ Color Light::illuminate(RAY_T ray, SCENE_T scene, int obj_index, Vec int_pt, Vec
 
         double dp = light_vector.dot(normal);
         if (dp > 0) {
-            color = color * dp * atten;
+            double delta = dp * atten;
+            Color temp_color = obj_color * delta;
+            color = color + temp_color;
 
             // specular light (only if the first dot product is positive)
             Vec r_vector = light_vector - normal * 2 * dp;
             r_vector.normalize();
             double dp2 = r_vector.dot(ray.dir);
             if (dp2 > 0) {
-                color = color + pow(dp2, 200) * atten;
+                color = color + (pow(dp2, 200) * atten);
             }
         }
     }

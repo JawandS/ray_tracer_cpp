@@ -44,7 +44,10 @@ RGB_T illuminate(OBJ_T *obj, VP_T intersection_point, VP_T normal, SCENE_T *scen
     color.g = 0.1 * obj_color.g;
     color.b = 0.1 * obj_color.b;
 
+    // printf("color: %f %f %f\n", color.r, color.g, color.b);
+
     // check for shadow
+    // printf("shadow test result: %d\n", shadow_test(intersection_point, obj, scene));
     if (!shadow_test(intersection_point, obj, scene)) {
         // get the attentuation - TODO FIX THIS 
         double dl = length(diff(scene->light.loc, intersection_point));
@@ -57,9 +60,15 @@ RGB_T illuminate(OBJ_T *obj, VP_T intersection_point, VP_T normal, SCENE_T *scen
 
         double dp = dot(light_vector, normal);
         if (dp > 0) {
+            // printf("color: %f %f %f\n", color.r, color.g, color.b);
+            // double delta = dp * atten;
+            // printf("delta: %f\n", obj_color.r);
             color.r += dp * obj_color.r * atten;
             color.g += dp * obj_color.g * atten;
             color.b += dp * obj_color.b * atten;
+            // print dp * color * atten
+            // printf("dp and attenuation: %f %f\n", dp, atten);
+            printf("rgb deltas: %f %f %f\n", dp * obj_color.r * atten, dp * obj_color.g * atten, dp * obj_color.b * atten);
 
             // specular light (only if the first dot product is positive)
             VP_T r_vector;
@@ -69,20 +78,22 @@ RGB_T illuminate(OBJ_T *obj, VP_T intersection_point, VP_T normal, SCENE_T *scen
             normalize(&r_vector);
             double dp2 = dot(r_vector, ray.dir);
             if (dp2 > 0) {
-                color.r += pow(dp2, 200) * atten;
-                color.g += pow(dp2, 200) * atten;
-                color.b += pow(dp2, 200) * atten;
+                color.r += (pow(dp2, 200) * atten);
+                color.g += (pow(dp2, 200) * atten);
+                color.b += (pow(dp2, 200) * atten);
             }
         }
     }
 
     // set colors to max value
+    // printf("color: %f %f %f\n", color.r, color.g, color.b);
     if (color.r > 1.0)
         color.r = 1.0;
     if (color.g > 1.0)
         color.g = 1.0;
     if (color.b > 1.0)
         color.b = 1.0;
+
 
     return color;
 }
