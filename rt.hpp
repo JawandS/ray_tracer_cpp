@@ -4,7 +4,9 @@
 using namespace std;
 
 // define constants
-#define BACKGROUND_COLOR 0.3
+#define BACKGROUND_R 0.3
+#define BACKGROUND_G 0.3
+#define BACKGROUND_B 0.5
 #define EYE_POS 0.0
 #define X_LEN 640
 #define Y_LEN 480

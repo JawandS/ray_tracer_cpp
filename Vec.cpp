@@ -3,6 +3,13 @@
 
 using namespace std;
 
+// constructor
+Vec::Vec(double x, double y, double z) {
+    this->x = x;
+    this->y = y;
+    this->z = z;
+}
+
 void Vec::normalize() {
     // normalize a vector
     double len = this->len();

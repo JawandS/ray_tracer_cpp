@@ -11,16 +11,8 @@ class Vec {
     
     public:
         // constructors
-        Vec() {
-            this->x = 0;
-            this->y = 0;
-            this->z = 0;
-        }
-        Vec(double x, double y, double z) {
-            this->x = x;
-            this->y = y;
-            this->z = z;
-        }
+        inline Vec() {}
+        Vec(double x, double y, double z);
 
         // set method
         void set(double x, double y, double z) {
@@ -32,13 +24,13 @@ class Vec {
         // normalize
         void normalize();
         // dot
-        double dot(Vec b) {
+        inline double dot(Vec b) {
             return this->x * b.x + 
                    this->y * b.y + 
                    this->z * b.z;
         }
         // len
-        double len() {
+        inline double len() {
             return sqrt(this->x * this->x + 
                         this->y * this->y + 
                         this->z * this->z);
@@ -60,7 +52,7 @@ class Vec {
         Vec scalar_divide(double s);
         Vec operator/(double s);
 
-        double sum_components() {
+        inline double sum_components() {
             return this->x + this->y + this->z;
         }
 
