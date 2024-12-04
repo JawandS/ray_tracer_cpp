@@ -119,8 +119,8 @@ int main() {
     scene->pixel_size = 1.0 / (double) Y_LEN;
 
     // open the file 
-    ofstream fimg("img.ppm");
     // ofstream fimg("creative.ppm");
+    ofstream fimg("img.ppm");
     // initialize image file header
     fimg << "P6\n";
     fimg << X_LEN << " " << Y_LEN << "\n";

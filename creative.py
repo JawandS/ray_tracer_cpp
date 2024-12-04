@@ -1,7 +1,8 @@
 # generate a scene file for the creative project
 import math
 
-SPHERE_RAD = 0.025
+SPHERE_RAD = 0.005
+DEPTH = 4 # depth of recursion
 
 def create_sphere(f, center, color, radius=SPHERE_RAD):
     return f.write(f"s\n{center}\n{radius}\n{color}\n\n")
@@ -14,14 +15,14 @@ def create_light(f, center):
 
 # main method
 with open("creative.txt", "w") as f:
-    # create bakcground plane
+    # create background plane
     create_plane(f, "0 0 -1", 30, "0 0 0", "0 0 0")
     
     # colors of the rainbow
     colors = ["1 0 0", "1 0.5 0", "1 1 0", "0 1 0", "0 0 1", "0.29 0 0.51", "0.56 0 1"]
     
     # radius of the circle and spheres
-    circle_radius = 5
+    circle_radius = 1
     
     # recursively generate rings of spheres 
     def gen_spheres(counter, center_X, center_Y, circle_radius, values):
@@ -40,8 +41,16 @@ with open("creative.txt", "w") as f:
                 gen_spheres(counter - 1, center_X + x, center_Y + z, circle_radius / 3, values)
 
     values = []
-    gen_spheres(7, 0, 0, circle_radius, values)
-    # print(values)
+    gen_spheres(DEPTH, 0, 0, circle_radius, values)
+    '''
+    6: 117649
+    5: 16807
+    4: 2401
+    3: 343
+    2: 49
+    1: 7
+    '''
+    print(f"length of vals: {len(values)}")
     for center, color in values:
         create_sphere(f, center, color)
 
