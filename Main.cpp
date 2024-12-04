@@ -19,6 +19,7 @@ static void init(SCENE_T *scene, Light *&light) {
     // default values for scene 
     scene->objs = nullptr;
     // read file for object information (use iostream)
+    // ifstream infile("creative.txt"); 
     ifstream infile("scene1.txt");
     Object *node = nullptr;
     char info_type; // what the information is 
@@ -119,6 +120,7 @@ int main() {
 
     // open the file 
     ofstream fimg("img.ppm");
+    // ofstream fimg("creative.ppm");
     // initialize image file header
     fimg << "P6\n";
     fimg << X_LEN << " " << Y_LEN << "\n";
@@ -140,7 +142,6 @@ int main() {
             fimg << (unsigned char) (255 * point_color.get_r()) << (unsigned char) (255 * point_color.get_g()) << (unsigned char) (255 * point_color.get_b());
         }
     }
-    printf("\n");
 
     // close the file
     fimg.close();
